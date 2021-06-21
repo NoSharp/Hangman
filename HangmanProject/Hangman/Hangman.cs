@@ -4,8 +4,9 @@ namespace HangmanProject.Hangman
 {
     public class Hangman : IHangman
     {
-        // The amount of 
-        private uint hangmanPosition = 0;
+        // The amount of guesses that it's taken.
+        // 
+        private uint hangmanPosition;
         
         public void IncrementHangman()
         {

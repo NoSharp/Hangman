@@ -35,6 +35,8 @@ namespace HangmanProject.Player
         {
             Console.WriteLine($"{this._name}: Enter your guess, you have {_guessesLeft} guesses left :");
             var readWord = Console.ReadLine();
+            
+            // Keep retrying so the player will enter a correctly formatted string of text.
             while (readWord.ToCharArray().Length == 0 || _game.GuessedLetters.ContainsKey(readWord.ToCharArray()[0]))
             {
                 
@@ -42,8 +44,9 @@ namespace HangmanProject.Player
                 readWord = Console.ReadLine();
             }
 
+            // Get the first letter of the character array.
             char character = readWord.ToCharArray()[0];
-
+            
             var answerCorrect = _game.IsCharacterInWord(character.ToString());
             _game.GuessedLetters.Add(character, answerCorrect);
             
@@ -53,8 +56,7 @@ namespace HangmanProject.Player
             {
                 _game.OnWrongGuess(this);
             }
-
-
+            
         }
 
         public void OnWinGame()

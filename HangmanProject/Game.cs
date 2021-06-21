@@ -22,7 +22,7 @@ namespace HangmanProject
         }
 
         /// <summary>
-        /// Called to popualte the fields of the class.
+        /// Called to populate the fields of the class.
         /// </summary>
         public void Start()
         {
@@ -31,13 +31,12 @@ namespace HangmanProject
 
         public void OnEventLoop()
         {
-            
-       
+
             foreach (var player in _players)
             {
                 player.OnRoundProgressed();
             }
-            
+
             if (_hangman.IsComplete())
             {
                 OnGameComplete(false);
@@ -53,12 +52,21 @@ namespace HangmanProject
             _hangman.DrawHangman();
         }
 
+        /// <summary>
+        /// Called when a player has entered a wrong guess.
+        /// </summary>
+        /// <param name="sender"> The Player who entered the command .</param>
         internal void OnWrongGuess(IPlayer sender)
         {
             _hangman.IncrementHangman();
             Console.WriteLine(_hangman.IsComplete());
         }
 
+        /// <summary>
+        /// Checks if the character is in the word.
+        /// </summary>
+        /// <param name="letter">The letter entered by the player.</param>
+        /// <returns></returns>
         public bool IsCharacterInWord(string letter) => TargetWord.Contains(letter);
 
         public bool IsAllCharactersGuessed() => TargetWord.ToCharArray().All(chr => GuessedLetters.ContainsKey(chr));
@@ -90,6 +98,13 @@ namespace HangmanProject
             }
         }
 
+        /// <summary>
+        /// Create a player from the name and desired type.
+        /// This is an abstract factory.
+        /// </summary>
+        /// <param name="name">The name of the player</param>
+        /// <param name="type">The type of the player</param>
+        /// <returns>The created IPlayer</returns>
         public IPlayer CreatePlayer(string name, PlayerType type)
         {
             IPlayer player = type switch
